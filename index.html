@@ -240,36 +240,52 @@
     }
 
     @media (max-width: 480px) {
-      .card {
-        width: 94%;
-        box-shadow: none;
-      }
+  .photo {
+    width: 140px;    /* 110px → 140px */
+    height: 175px;   /* 135px → 175px */
+    margin-bottom: 40px; /* 조금 여유 있게 */
+  }
 
-      .photo {
-        width: 110px;
-        height: 135px;
-        margin-bottom: 30px;
-      }
+  .content {
+    padding: 0 12px;
+    margin-bottom: 40px; /* 기존보다 약간 여유 */
+  }
 
-      .content {
-        padding: 0 12px;
-        margin-bottom: 30px;
-      }
+  .qr-area {
+    width: 130px;    /* 100px → 130px */
+    height: 130px;   /* 100px → 130px */
+  }
 
-      .qr-area {
-        width: 100px;
-        height: 100px;
-      }
+  .bottom {
+    padding: 14px 15px 18px 15px;
+  }
 
-      .bottom {
-        padding: 14px 15px 18px 15px;
-      }
+  .bottom-text {
+    font-size: 15px;    /* 13px → 15px */
+    margin-bottom: 8px; /* 기존 6px → 8px */
+  }
 
-      .notice-bar {
-        height: 32px;
-        font-size: 13px;
-      }
-    }
+  .progress {
+    height: 8px;       /* 6px → 8px */
+    margin-bottom: 12px; /* 기존 10px → 12px */
+  }
+
+  .guide {
+    font-size: 14px;   /* 13px → 14px */
+    margin-bottom: 14px; /* 기존 10px → 14px */
+  }
+
+  .detail-btn {
+    padding: 14px 0;   /* 11px → 14px */
+    font-size: 16px;   /* 15px → 16px */
+    border-radius: 12px; /* 10px → 12px */
+  }
+
+  .notice-bar {
+    height: 42px;       /* 32px → 약 1.3배인 42px */
+    font-size: 17px;    /* 13px → 17px */
+  }
+}
   </style>
 </head>
 <body>
