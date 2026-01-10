@@ -2,263 +2,262 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>주민등록증 모바일 확인서비스</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#ffffff">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
     body {
       margin: 0;
-      font-family: 'Noto Sans KR', sans-serif;
-      background: #f0f2f5;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: #f5f6f8;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
       min-height: 100vh;
-      padding-top: 20px;
-      box-sizing: border-box;
     }
 
-    /* 카드 */
+    /* 카드 컨테이너 */
     .card {
-      width: 380px;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh; /* 모바일 전체 화면 대응 */
       background: #fff;
-      border-radius: 14px 14px 0 0;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
 
-    /* 헤더 */
+    /* 헤더 영역 */
     .header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 14px;
-      font-weight: 500;
-      color: #111;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .back-icon {
-      width: 20px;
-      height: 20px;
-    }
-
-    .gov-logo {
-      width: 26px;
-      height: 20px;
-    }
-
-    .header-menu {
-      font-size: 20px;
+    .back-icon { width: 24px; height: 24px; cursor: pointer; }
+    
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
       color: #333;
+      margin-right: 24px; /* 뒤로가기 아이콘 공간만큼 우측 여백 */
     }
 
-    /* 사진 */
-    .photo {
-      width: 110px;
-      height: 135px;
-      margin: 26px auto 32px;
-      background: #fff;
-      border-radius: 2px;
+    /* 사진 영역 */
+    .photo-container {
+      margin: 40px auto 30px;
+      width: 140px;
+      height: 175px;
+      border-radius: 12px;
       overflow: hidden;
+      background: #f0f0f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .photo img {
+    .photo-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    /* 정보 + QR */
-    .content {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 16px;
-      margin-bottom: 36px;
-    }
-
-    .info {
-      flex: 1;
+    /* 정보 영역 */
+    .info-section {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     .name {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 6px;
+      font-size: 22px;
+      font-weight: 800;
       color: #111;
+      margin-bottom: 8px;
     }
 
-    .birth,
-    .address {
-      font-size: 13px;
+    .birth-address {
+      font-size: 15px;
       color: #666;
-      margin-bottom: 4px;
+      line-height: 1.5;
     }
 
-    .qr-area {
-      width: 110px;
-      height: 110px;
+    /* QR 코드 영역 */
+    .qr-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
-    /* 하단 */
-    .bottom {
-      border-top: 1px solid #e5e7eb;
-      padding: 12px 16px 16px;
+    .qr-box {
+      width: 150px;
+      height: 150px;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 15px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
-    .bottom-text {
+    /* 하단 진행 바 및 버튼 */
+    .bottom-section {
+      margin-top: auto;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .timer-info {
       display: flex;
       justify-content: space-between;
-      font-size: 13px;
-      color: #333;
-      margin-bottom: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2563eb;
     }
 
-    .progress {
+    .progress-bar {
       width: 100%;
       height: 6px;
-      background: #e5e7eb;
+      background: #eee;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 25px;
     }
 
-    .fill {
+    .progress-fill {
       height: 100%;
-      width: 100%;
       background: #2563eb;
+      width: 100%;
       transition: width 1s linear;
-    }
-
-    .guide {
-      font-size: 13px;
-      color: #777;
-      text-align: center;
-      margin-bottom: 12px;
     }
 
     .detail-btn {
       width: 100%;
-      padding: 12px 0;
+      height: 55px;
       background: #2563eb;
       color: #fff;
       border: none;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 4px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    /* 캡처방지 바 */
-    .notice-bar {
-      height: 32px;
-      background: linear-gradient(90deg, rgba(139,92,246,.9), rgba(168,85,247,.9));
-      color: rgba(255,255,255,.85);
+    /* 캡처 방지 바 */
+    .capture-notice {
+      background: #6366f1;
+      color: #fff;
+      padding: 10px 0;
       font-size: 13px;
-      display: flex;
-      align-items: center;
+      text-align: center;
       overflow: hidden;
-    }
-
-    .scroll-text {
       white-space: nowrap;
-      animation: scroll 14s linear infinite;
-      padding-left: 100%;
     }
 
-    @keyframes scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-100%); }
+    .scrolling-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="header">
-      <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#111" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-      </svg>
+<div class="card">
+  <div class="header">
+    <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    <div class="header-title">주민등록증 모바일 확인</div>
+  </div>
 
-      <div class="header-left">
-        <img src="logo.png" class="gov-logo" alt="">
-        <span>주민등록증 모바일 확인서비스</span>
-      </div>
+  <div class="photo-container">
+    <img src="img.jpg" alt="증명사진">
+  </div>
 
-      <div class="header-menu">☰</div>
-    </div>
-
-    <div class="photo">
-      <img src="img.jpg" alt="">
-    </div>
-
-    <div class="content">
-      <div class="info">
-        <div class="name">노무현</div>
-        <div class="birth">09.05.11</div>
-        <div class="address">성남시 중원구 467-2</div>
-      </div>
-      <div class="qr-area" id="qr"></div>
-    </div>
-
-    <div class="bottom">
-      <div class="bottom-text">
-        <span>남은시간</span>
-        <span id="time">30초</span>
-      </div>
-      <div class="progress">
-        <div class="fill" id="fill"></div>
-      </div>
-      <div class="guide">QR코드를 리더기에 스캔하세요</div>
-      <button class="detail-btn">상세정보 표시</button>
-    </div>
-
-    <div class="notice-bar">
-      <div class="scroll-text">
-        캡처방지 시스템이 작동 중입니다. 캡처방지 시스템이 작동 중입니다.
-      </div>
+  <div class="info-section">
+    <div class="name">이기우</div>
+    <div class="birth-address">
+      07.04.09<br>
+      경기도 광주시
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
-  <script>
-    let time = 30;
+  <div class="qr-wrapper">
+    <div class="qr-box" id="qr-code"></div>
+    <p style="font-size: 13px; color: #888; margin-top: 15px;">QR코드를 리더기에 스캔하세요</p>
+  </div>
 
-    function generateQR() {
-      const el = document.getElementById('qr');
-      el.innerHTML = '';
-      new QRCode(el, {
-        text: Math.random().toString(36).substring(2, 12),
-        width: 110,
-        height: 110,
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }
+  <div class="bottom-section">
+    <div class="timer-info">
+      <span>남은시간</span>
+      <span id="timer-sec">30초</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <button class="detail-btn">상세정보 표시</button>
+  </div>
 
-    function startTimer() {
-      setInterval(() => {
-        time--;
-        if (time <= 0) {
-          time = 30;
-          generateQR();
-        }
-        document.getElementById('time').textContent = time + '초';
-        document.getElementById('fill').style.width = (time / 30 * 100) + '%';
-      }, 1000);
-    }
+  <div class="capture-notice">
+    <div class="scrolling-text">
+      캡처방지 시스템이 작동 중입니다. 화면을 캡처하거나 녹화할 수 없습니다. &nbsp;&nbsp;&nbsp; 캡처방지 시스템이 작동 중입니다. 
+    </div>
+  </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<script>
+  let timeLeft = 30;
+  const timerElement = document.getElementById('timer-sec');
+  const progressFill = document.getElementById('progress-fill');
+  const qrContainer = document.getElementById('qr-code');
+
+  function generateQR() {
+    qrContainer.innerHTML = '';
+    new QRCode(qrContainer, {
+      text: "https://github.com/davidshimjs/qrcodejs/" + Math.random(),
+      width: 130,
+      height: 130,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+
+  function startTimer() {
+    setInterval(() => {
+      timeLeft--;
+      if (timeLeft < 0) {
+        timeLeft = 30;
+        generateQR();
+      }
+      timerElement.textContent = timeLeft + '초';
+      progressFill.style.width = (timeLeft / 30 * 100) + '%';
+    }, 1000);
+  }
+
+  window.onload = () => {
     generateQR();
     startTimer();
-  </script>
+  };
+</script>
 
 </body>
 </html>
